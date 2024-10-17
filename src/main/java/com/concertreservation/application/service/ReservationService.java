@@ -24,7 +24,7 @@ public class ReservationService {
     }
 
     @Transactional
-    public void reserveSeat(String userId, String date, int seatNumber) {
+    public void reserveSeat(long userId, String date, int seatNumber) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + userId));
 

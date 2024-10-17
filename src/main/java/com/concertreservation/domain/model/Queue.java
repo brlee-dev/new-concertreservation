@@ -9,11 +9,7 @@ public class Queue {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long queueId;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
+    String uuid;
     private LocalDateTime createdAt;
     private int position;
     private String status;
@@ -21,8 +17,8 @@ public class Queue {
     protected Queue() {
     }
 
-    public Queue(User user, int position) {
-        this.user = user;
+    public Queue(String uuid, int position) {
+        this.uuid = uuid;
         this.position = position;
         this.createdAt = LocalDateTime.now();
         this.status = "ACTIVE";
@@ -36,6 +32,9 @@ public class Queue {
 
     public Long getQueueId() {
         return queueId;
+    }
+    public String getUuid() {
+        return uuid;
     }
 
     public int getPosition() {

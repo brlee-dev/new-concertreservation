@@ -2,13 +2,13 @@ package com.concertreservation.application.dto;
 
 public class QueueTokenDto {
     private Long queueId;
-    private String userId;
+    private String uuid;
     private int position;
     private int remainingTime;
 
     public QueueTokenDto(Long queueId, String userId, int position, int remainingTime) {
         this.queueId = queueId;
-        this.userId = userId;
+        this.uuid = userId;
         this.position = position;
         this.remainingTime = remainingTime;
     }
@@ -18,7 +18,7 @@ public class QueueTokenDto {
     }
 
     public String getUserId() {
-        return userId;
+        return uuid;
     }
 
     public int getPosition() {

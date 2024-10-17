@@ -17,7 +17,7 @@ public class ReservationController {
     }
 
     @PostMapping("/reserve")
-    public ResponseEntity<String> reserveSeat(@RequestParam String userId,
+    public ResponseEntity<String> reserveSeat(@RequestParam long userId,
                                               @RequestParam String date,
                                               @RequestParam int seatNumber) {
         reservationService.reserveSeat(userId, date, seatNumber);

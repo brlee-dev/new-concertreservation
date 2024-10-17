@@ -15,7 +15,7 @@ public class QueueController {
     }
 
     @PostMapping("/issue")
-    public QueueTokenDto issueToken(@RequestParam String userId) {
-        return queueService.issueQueueToken(userId);
+    public QueueTokenDto issueToken() {
+        return queueService.issueQueueToken();
     }
 }

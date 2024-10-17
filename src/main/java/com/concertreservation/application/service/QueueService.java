@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class QueueService {
@@ -22,18 +23,16 @@ public class QueueService {
     }
 
     @Transactional
-    public QueueTokenDto issueQueueToken(String userId) {
-        User user = userRepository.findByUuid(userId)
-            .orElseThrow(() -> new IllegalArgumentException("User not found"));
-
-        Queue queue = new Queue(user, calculatePosition());
+    public QueueTokenDto issueQueueToken() {
+        Queue queue = new Queue(UUID.randomUUID().toString(), calculatePosition());
         queueRepository.save(queue);
 
-        return new QueueTokenDto(queue.getQueueId(), user.getUuid(), queue.getPosition(), queue.calculateRemainingTime());
+
+        return new QueueTokenDto(queue.getQueueId(), queue.getUuid(), queue.getPosition(), queue.calculateRemainingTime());
     }
 
-    public QueueTokenDto checkQueueStatus(String userId) {
-        Optional<Queue> optionalQueue = queueRepository.findByUser_Uuid(userId);
+    public QueueTokenDto checkQueueStatus(String uuid) {
+        Optional<Queue> optionalQueue = queueRepository.findByUuid(uuid);
         
         if (optionalQueue.isEmpty()) {
             throw new IllegalArgumentException("Queue not found");
@@ -47,7 +46,7 @@ public class QueueService {
             queueRepository.save(queue);
         }
 
-        return new QueueTokenDto(queue.getQueueId(), userId, queue.getPosition(), remainingTime);
+        return new QueueTokenDto(queue.getQueueId(), uuid, queue.getPosition(), remainingTime);
     }
 
     private int calculatePosition() {
