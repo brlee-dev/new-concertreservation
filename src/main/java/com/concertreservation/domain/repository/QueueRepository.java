@@ -6,4 +6,6 @@ import java.util.Optional;
 
 public interface QueueRepository extends JpaRepository<Queue, Long> {
     Optional<Queue> findByUser_UserId(String userId);
+
+    Optional<Queue> findByUser_Uuid(String userId);
 }
