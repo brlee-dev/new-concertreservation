@@ -5,7 +5,7 @@ import com.concertreservation.domain.model.QueueToken;
 import com.concertreservation.domain.model.User;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.UUID;
+
 
 @RestController
 @RequestMapping("/api/queue")
