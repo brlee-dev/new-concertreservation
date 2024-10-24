@@ -2,6 +2,8 @@ package com.concertreservation.application.service;
 
 import com.concertreservation.domain.model.*;
 import com.concertreservation.domain.repository.*;
+import com.concertreservation.exception.BusinessException;
+import com.concertreservation.exception.ErrorCode;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,28 +26,28 @@ public class PaymentService {
     @Transactional
     public void processPayment(String userId, Long seatId, String tokenId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.USER_NOT_FOUND));
 
         Seat seat = seatRepository.findById(seatId)
-                .orElseThrow(() -> new RuntimeException("좌석을 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.SEAT_NOT_FOUND));
 
         QueueToken token = queueTokenRepository.findById(tokenId)
-                .orElseThrow(() -> new RuntimeException("토큰을 찾을 수 없습니다."));
+                .orElseThrow(() -> new BusinessException(ErrorCode.TOKEN_NOT_FOUND));
 
         // 토큰 만료 여부 확인
         if (token.isExpired()) {
-            throw new RuntimeException("토큰이 만료되었습니다.");
+            throw new BusinessException(ErrorCode.TOKEN_EXPIRED);
         }
 
         // 좌석이 이미 판매되었는지 확인
         if (seat.isSold()) {
-            throw new RuntimeException("이미 판매된 좌석입니다.");
+            throw new BusinessException(ErrorCode.SEAT_ALREADY_SOLD);
         }
 
         // 사용자 잔액 확인
         double price = seat.getPrice(); // 좌석 가격
         if (user.getBalance() < price) {
-            throw new RuntimeException("잔액이 부족합니다.");
+            throw new BusinessException(ErrorCode.INSUFFICIENT_BALANCE);
         }
 
         // 잔액 차감

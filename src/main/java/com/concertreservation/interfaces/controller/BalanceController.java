@@ -3,6 +3,8 @@ package com.concertreservation.interfaces.controller;
 import com.concertreservation.application.service.BalanceService;
 import com.concertreservation.application.service.QueueTokenService;
 import com.concertreservation.domain.model.QueueToken;
+import com.concertreservation.exception.BusinessException;
+import com.concertreservation.exception.ErrorCode;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -26,7 +28,7 @@ public class BalanceController {
 
         // 요청된 userId와 토큰의 userId가 일치하는지 확인
         if (!tokenUserId.equals(userId)) {
-            throw new RuntimeException("인증된 사용자와 요청된 사용자 ID가 일치하지 않습니다.");
+            throw new BusinessException(ErrorCode.USER_ID_MISMATCH);
         }
 
         balanceService.rechargeBalance(userId, amount);

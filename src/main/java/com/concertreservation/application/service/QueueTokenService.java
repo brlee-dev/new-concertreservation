@@ -3,6 +3,8 @@ package com.concertreservation.application.service;
 import com.concertreservation.domain.model.QueueToken;
 import com.concertreservation.domain.model.User;
 import com.concertreservation.domain.repository.QueueTokenRepository;
+import com.concertreservation.exception.BusinessException;
+import com.concertreservation.exception.ErrorCode;
 import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -28,7 +30,7 @@ public class QueueTokenService {
     public QueueToken getQueueStatus(String tokenId) {
         QueueToken token = activeTokens.get(tokenId);
         if (token == null || token.isExpired()) {
-            throw new RuntimeException("Token expired or not found");
+            throw new BusinessException(ErrorCode.TOKEN_INVALID);
         }
         return token;
     }
