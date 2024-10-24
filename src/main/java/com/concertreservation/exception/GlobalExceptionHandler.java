@@ -3,8 +3,6 @@ package com.concertreservation.exception;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.concertreservation.exception.ErrorCode;
-import com.concertreservation.exception.ErrorResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
