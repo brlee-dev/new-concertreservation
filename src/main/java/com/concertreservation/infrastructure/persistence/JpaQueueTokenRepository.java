@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface JpaQueueTokenRepository extends JpaRepository<QueueToken, UUID>, QueueTokenRepository {
+public interface JpaQueueTokenRepository extends JpaRepository<QueueToken, String>, QueueTokenRepository {
 }

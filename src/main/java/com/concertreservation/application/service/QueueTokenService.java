@@ -1,30 +1,31 @@
 package com.concertreservation.application.service;
 
 import com.concertreservation.domain.model.QueueToken;
+import com.concertreservation.domain.model.User;
 import com.concertreservation.domain.repository.QueueTokenRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 public class QueueTokenService {
 
     private final QueueTokenRepository queueTokenRepository;
-    private final ConcurrentHashMap<UUID, QueueToken> activeTokens = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, QueueToken> activeTokens = new ConcurrentHashMap<>();
 
     public QueueTokenService(QueueTokenRepository queueTokenRepository) {
         this.queueTokenRepository = queueTokenRepository;
     }
 
-    public QueueToken issueToken(UUID userId) {
-        QueueToken token = new QueueToken(userId);
+    public QueueToken issueToken(User user) {
+        QueueToken token = new QueueToken(user);
         activeTokens.put(token.getTokenId(), token);
         return queueTokenRepository.save(token);
     }
 
-    public QueueToken getQueueStatus(UUID tokenId) {
+    public QueueToken getQueueStatus(String tokenId) {
         QueueToken token = activeTokens.get(tokenId);
         if (token == null || token.isExpired()) {
             throw new RuntimeException("Token expired or not found");
@@ -32,13 +33,19 @@ public class QueueTokenService {
         return token;
     }
 
-    @Scheduled(fixedDelay = 60000) // 매 1분마다 스케줄링
-    public void cleanUpExpiredTokens() {
+    @Scheduled(fixedDelay = 60000)
+    @Transactional
+    public void updateExpiredTokens() {
+        System.out.println("스케줄러 실행 중: 만료된 토큰을 업데이트합니다.");
         activeTokens.forEach((tokenId, token) -> {
-            if (token.isExpired()) {
+            if (token.isTimeExpired()) {
+                token.setStatus("expired");
+                queueTokenRepository.save(token); // 상태 업데이트
                 activeTokens.remove(tokenId);
-                queueTokenRepository.delete(token); // DB에서도 제거
+                System.out.println("토큰 만료됨: " + tokenId);
             }
         });
     }
 }
+
+

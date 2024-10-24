@@ -1,7 +1,6 @@
 package com.concertreservation.domain.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -9,43 +8,43 @@ import java.util.UUID;
 public class QueueToken {
 
     @Id
-    private UUID tokenId;
-    private UUID userId;
-    private int queuePosition;
-    private LocalDateTime issuedAt;
-    private LocalDateTime expiresAt;
+    private String tokenId;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    private LocalDateTime issuedAt; // 토큰 발급 시간
+    private LocalDateTime expiresAt; // 토큰 만료 시간
+
+    private String status; // 토큰 상태 ('valid', 'expired' 등)
 
     public QueueToken() {
     }
 
-    public QueueToken(UUID userId) {
-        this.tokenId = UUID.randomUUID();
-        this.userId = userId;
-        this.queuePosition = calculateQueuePosition();
+    public QueueToken(User user) {
+        this.tokenId = UUID.randomUUID().toString();
+        this.user = user;
         this.issuedAt = LocalDateTime.now();
-        this.expiresAt = this.issuedAt.plusMinutes(5); // 5분 유효시간 설정
+        this.expiresAt = this.issuedAt.plusMinutes(5); // 토큰 유효 시간 5분
+        this.status = "valid"; // 초기 상태 설정
     }
 
     public boolean isExpired() {
+        return "expired".equals(this.status);
+    }
+
+    public boolean isTimeExpired() {
         return LocalDateTime.now().isAfter(this.expiresAt);
     }
 
-    private int calculateQueuePosition() {
-        // 실제 대기열 로직 구현
-        return 0; // 예시 값
-    }
-
     // Getters and Setters
-    public UUID getTokenId() {
+    public String getTokenId() {
         return tokenId;
     }
 
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public int getQueuePosition() {
-        return queuePosition;
+    public User getUser() {
+        return user;
     }
 
     public LocalDateTime getIssuedAt() {
@@ -55,4 +54,14 @@ public class QueueToken {
     public LocalDateTime getExpiresAt() {
         return expiresAt;
     }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
+
+
