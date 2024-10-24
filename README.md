@@ -65,7 +65,7 @@
 ![image](https://github.com/user-attachments/assets/2dd53491-41dd-4f36-aa20-f08c7ff52863)
 ![image](https://github.com/user-attachments/assets/ee70dfec-09fd-4483-a0a5-e65f334adcec)
 
-### 6. 좌석 예약 API
+## 6. 좌석 예약 API
 설명
  - 사용자가 특정 좌석을 예약합니다.
  
@@ -74,17 +74,17 @@
 ![image](https://github.com/user-attachments/assets/ff9a1d81-435c-4261-b4d0-827f420d91f3)
 ![image](https://github.com/user-attachments/assets/eb43fbf7-442f-4c78-86e6-4e21b349f959)
 
-### 7. 좌석 결제 API
+## 7. 좌석 결제 API
 설명
  - 사용자가 예약한 좌석을 결제합니다.
 
-## 엔드포인트
+### 엔드포인트
  - `POST /api/payment/process`
 ![image](https://github.com/user-attachments/assets/67507dec-0e7c-4ad1-b52c-6cc43fea845a)
 ![image](https://github.com/user-attachments/assets/85e7f69e-70e7-4ca0-ab12-9524023ea482)
 
-### 8. 몇가지 에러 상황 테스트
-## 시나리오
+## 8. 몇가지 에러 상황 테스트
+### 시나리오
  - 만료된 토큰으로 요청하거나 잔액이 부족한 상태에서 결제를 시도합니다.
  - 
 (a) 만료된 토큰으로 요청
