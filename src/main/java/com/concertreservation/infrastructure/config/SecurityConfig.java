@@ -11,11 +11,14 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf(csrf -> csrf.disable()) // 새로운 방식으로 CSRF 보호 비활성화
-            .authorizeRequests(authorizeRequests -> 
-                authorizeRequests
-                    .anyRequest().authenticated()
-            );
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/queue/issue-token").permitAll()
+                        .requestMatchers("/api/balance/**").permitAll()
+                        .requestMatchers("/api/reservations/**").permitAll()
+                        .requestMatchers("/api/payment/**").permitAll()
+                        .anyRequest().authenticated()
+                );
 
         return http.build();
     }
