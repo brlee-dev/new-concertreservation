@@ -44,7 +44,7 @@
  - 사용자가 자신의 잔액을 조회합니다.
 
 ### 엔드포인트
-GET /api/balance/get
+ - `GET /api/balance/get`
 ![image](https://github.com/user-attachments/assets/23a72fc2-c9d0-4e80-944f-93eb0b7cf57f)
 
 ## 4. 예약 가능한 날짜 목록 조회 API
@@ -52,4 +52,33 @@ GET /api/balance/get
  - 사용자가 예약 가능한 공연 날짜를 조회합니다.
 
 ### 엔드포인트
-GET /api/reservations/dates
+ - `GET /api/reservations/dates`
+![image](https://github.com/user-attachments/assets/c4d8ed2d-28f9-46f5-9fcf-4cb16b5a6fdd)
+![image](https://github.com/user-attachments/assets/dcf85d62-b04f-407b-be08-bfc59f0d1f8f)
+
+## 5. 특정 날짜의 예약 가능한 좌석 조회 API
+설명
+ - 사용자가 특정 날짜의 예약 가능한 좌석을 조회합니다.
+
+### 엔드포인트
+ - `GET /api/reservations/seats`
+![image](https://github.com/user-attachments/assets/2dd53491-41dd-4f36-aa20-f08c7ff52863)
+![image](https://github.com/user-attachments/assets/ee70dfec-09fd-4483-a0a5-e65f334adcec)
+
+### 6. 좌석 예약 API
+설명
+ - 사용자가 특정 좌석을 예약합니다.
+ 
+### 엔드포인트
+ - `POST /api/reservations/reserve`
+![image](https://github.com/user-attachments/assets/ff9a1d81-435c-4261-b4d0-827f420d91f3)
+![image](https://github.com/user-attachments/assets/eb43fbf7-442f-4c78-86e6-4e21b349f959)
+
+### 7. 좌석 결제 API
+설명
+ - 사용자가 예약한 좌석을 결제합니다.
+
+## 엔드포인트
+ - `POST /api/payment/process`
+![image](https://github.com/user-attachments/assets/67507dec-0e7c-4ad1-b52c-6cc43fea845a)
+![image](https://github.com/user-attachments/assets/85e7f69e-70e7-4ca0-ab12-9524023ea482)
