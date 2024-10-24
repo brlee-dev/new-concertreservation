@@ -82,3 +82,19 @@
  - `POST /api/payment/process`
 ![image](https://github.com/user-attachments/assets/67507dec-0e7c-4ad1-b52c-6cc43fea845a)
 ![image](https://github.com/user-attachments/assets/85e7f69e-70e7-4ca0-ab12-9524023ea482)
+
+### 8. 몇가지 에러 상황 테스트
+## 시나리오
+ - 만료된 토큰으로 요청하거나 잔액이 부족한 상태에서 결제를 시도합니다.
+ - 
+(a) 만료된 토큰으로 요청
+설명: 토큰 발급 후 5분이 지난 후 요청합니다.
+요청 방법: 위의 요청들과 동일하지만, 만료된 tokenId를 사용합니다.
+![image](https://github.com/user-attachments/assets/ae2c275e-2dcd-4d16-886a-12ac28e9a2ef)
+
+
+(b) 잔액 부족으로 결제 시도
+설명: 사용자의 잔액이 좌석 가격보다 적은 상태에서 결제를 시도합니다.
+![image](https://github.com/user-attachments/assets/ba38286d-dfd9-4a5a-87f9-1f41b0b8a2e8)
+![image](https://github.com/user-attachments/assets/3941050d-2cc2-416e-96a2-3d552f5f877e)
+
